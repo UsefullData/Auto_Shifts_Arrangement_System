@@ -1,6 +1,7 @@
 #ifndef GREEDYSHIFTSCHEDULER_H
 #define GREEDYSHIFTSCHEDULER_H
 
+#include "IScheduleTable.h"
 #include "VectorScheduleTable.h"
 #include <vector>
 #include <iostream>
