@@ -1,6 +1,7 @@
 #include "VectorScheduleTable.h"
 
-using namespace std; // added namespace
+using namespace std; 
+
 
 // Initialize the schedule with all zeros
 void VectorScheduleTable::initialize(int staffCount, int dayCount) {
@@ -46,3 +47,4 @@ void VectorScheduleTable::print() const {
         cout << endl;
     }
 }
+
