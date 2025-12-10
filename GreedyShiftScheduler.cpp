@@ -1,5 +1,4 @@
 #include "GreedyShiftScheduler.h"
-#include <iostream>
 
 void GreedyShiftScheduler::setStaffCount(int m) {
     staffCount = m;
@@ -10,34 +9,36 @@ void GreedyShiftScheduler::setDayCount(int n) {
 }
 
 void GreedyShiftScheduler::setMinimumDaysOff(int k) {
-    minDaysOff = k;
+    minOffDays = k;
 }
 
-void GreedyShiftScheduler::setDailyRequirements(const std::vector<int>& requirements) {
-    dailyReq = requirements;
+void GreedyShiftScheduler::setDailyRequirements(const vector<int>& requirements) {
+    dailyRequirements = requirements;
 }
 
-void GreedyShiftScheduler::generateSchedule(IScheduleTable& schedule) {
-    // Loop through each day
-    for (int d = 0; d < dayCount; d++) {
+// Greedy algorithm to assign shifts automatically
+void GreedyShiftScheduler::generateSchedule(VectorScheduleTable& schedule) {
+    vector<int> workDays(staffCount, 0); // tracks how many days each staff member is assigned
 
-        int required = dailyReq[d];
+    for (int day = 0; day < dayCount; ++day) {
+        int workersAssigned = 0;
 
-        // Assign the first available staff
-        for (int s = 0; s < staffCount && required > 0; s++) {
+        // Assign staff to meet daily requirements
+        for (int staff = 0; staff < staffCount && workersAssigned < dailyRequirements[day]; ++staff) {
+            if (!schedule.isAssigned(staff, day) && workDays[staff] < (dayCount - minOffDays)) {
+                schedule.assign(staff, day);
+                workDays[staff]++;
+                workersAssigned++;
+            }
+        }
 
-            // assign(staffID, dayID)
-            schedule.assign(s, d);
-
-            required--;
+        // Optional: assign extra staff if available
+        for (int staff = 0; staff < staffCount && workersAssigned < staffCount; ++staff) {
+            if (!schedule.isAssigned(staff, day) && workDays[staff] < (dayCount - minOffDays)) {
+                schedule.assign(staff, day);
+                workDays[staff]++;
+                workersAssigned++;
+            }
         }
     }
-}
-
-bool GreedyShiftScheduler::validate(const IScheduleTable& schedule) const {
-    for (int d = 0; d < dayCount; d++) {
-        int workers = schedule.countWorkersOnDay(d);
-        if (workers < dailyReq[d]) return false;
-    }
-    return true;
 }

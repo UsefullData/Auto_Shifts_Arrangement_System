@@ -1,27 +1,27 @@
-#ifndef GREEDY_SHIFT_SCHEDULER_H
-#define GREEDY_SHIFT_SCHEDULER_H
+#ifndef GREEDYSHIFTSCHEDULER_H
+#define GREEDYSHIFTSCHEDULER_H
 
-#include "IShiftScheduler.h"
+#include "IScheduleTable.h"
+#include "VectorScheduleTable.h"
+#include <vector>
+#include <iostream>
 
-class GreedyShiftScheduler : public IShiftScheduler {
-public:
-    GreedyShiftScheduler() = default;
-    ~GreedyShiftScheduler() override = default;
+using namespace std;
 
-    void setStaffCount(int m) override;
-    void setDayCount(int n) override;
-    void setMinimumDaysOff(int k) override;
-    void setDailyRequirements(const std::vector<int>& requirements) override;
-
-    void generateSchedule(IScheduleTable& schedule) override;
-
-    bool validate(const IScheduleTable& schedule) const override;
-
+class GreedyShiftScheduler {
 private:
-    int staffCount = 0;
-    int dayCount = 0;
-    int minDaysOff = 0;
-    std::vector<int> dailyReq;
+    int staffCount;
+    int dayCount;
+    int minOffDays;
+    vector<int> dailyRequirements;
+
+public:
+    void setStaffCount(int m);
+    void setDayCount(int n);
+    void setMinimumDaysOff(int k);
+    void setDailyRequirements(const vector<int>& requirements);
+
+    void generateSchedule(VectorScheduleTable& schedule);
 };
 
-#endif
+#endif 
