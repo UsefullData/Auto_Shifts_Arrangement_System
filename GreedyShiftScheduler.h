@@ -24,5 +24,4 @@ public:
     void generateSchedule(VectorScheduleTable& schedule);
 };
 
-#endif 
-
+#endif // GREEDYSHIFTSCHEDULER_H
