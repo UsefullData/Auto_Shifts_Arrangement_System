@@ -1,23 +1,45 @@
 #include "StaffManagerImpl.h"
 
-void StaffManagerImpl::initialize(int staffCount, int dayCount, int minOffDays) {
-    this->staffCount = staffCount;
-    this->dayCount = dayCount;
-    this->minOffDays = minOffDays;
+StaffManagerImpl::StaffManagerImpl()
+    : staffCount(0), dayCount(0), minOffDays(0) {}
 
-    // Initialize workDays and offDays for each staff member to 0
+// Set up internal arrays for a new schedule
+void StaffManagerImpl::initialize(int staffCount_, int dayCount_, int minOffDays_) {
+    staffCount  = staffCount_;
+    dayCount    = dayCount_;
+    minOffDays  = minOffDays_;
+
     workDays.assign(staffCount, 0);
     offDays.assign(staffCount, 0);
-
 }
+
+bool StaffManagerImpl::inStaffRange(int staffID) const {
+    return staffID >= 0 && staffID < staffCount;
+}
+
 void StaffManagerImpl::addWorkDay(int staffID) {
-    if (staffID >= 0 && staffID < staffCount) {
-        workDays[staffID]++;
-    }
-}
-void StaffManagerImpl::addOffDay(int staffID) {
-    if (staffID >= 0 && staffID < staffCount) {
-        offDays[staffID]++;
+    if (inStaffRange(staffID)) {
+        ++workDays[staffID];
     }
 }
 
+void StaffManagerImpl::addOffDay(int staffID) {
+    if (inStaffRange(staffID)) {
+        ++offDays[staffID];
+    }
+}
+
+int StaffManagerImpl::getWorkDays(int staffID) const {
+    if (!inStaffRange(staffID)) return 0;
+    return workDays[staffID];
+}
+
+int StaffManagerImpl::getOffDays(int staffID) const {
+    if (!inStaffRange(staffID)) return 0;
+    return offDays[staffID];
+}
+
+bool StaffManagerImpl::canWork(int staffID, int remainingDays) const {
+    if (!inStaffRange(staffID)) return false;
+    return offDays[staffID] + remainingDays >= minOffDays;
+}

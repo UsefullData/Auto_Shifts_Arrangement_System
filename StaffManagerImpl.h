@@ -22,8 +22,7 @@ public:
     void addOffDay(int staffID) override;
     int getWorkDays(int staffID) const override;
     int getOffDays(int staffID) const override;
-    bool canWork(int staffID, int remainingDays) const override; 
-}; 
+    bool canWork(int staffID, int remainingDays) const override;
+};
 
-#endif
-
+#endif 
