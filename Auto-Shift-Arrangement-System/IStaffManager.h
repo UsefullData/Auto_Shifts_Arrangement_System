@@ -13,7 +13,7 @@ public:
     virtual int getWorkDays(int staffID) const = 0;
     virtual int getOffDays(int staffID) const = 0;
 
-    virtual bool canWork(int staffID, int remainingDays) const = 0;
+    virtual bool canWork(int staffID) const = 0;
 };
 
 #endif 

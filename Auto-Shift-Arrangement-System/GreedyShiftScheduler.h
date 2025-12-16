@@ -2,19 +2,31 @@
 #define GREEDYSHIFTSCHEDULER_H
 
 #include <vector>
-#include <queue>                 // for priority_queue
-#include "VectorScheduleTable.h"
+#include <queue>
+#include <iostream>
+#include <algorithm>
 
-class GreedyShiftScheduler {
+#include "IScheduleTable.h"
+#include "IShiftScheduler.h"
+#include "StaffManagerImpl.h"
+
+using namespace std;
+
+class GreedyShiftScheduler : public IShiftScheduler {
 private:
-    // ---------------- Core parameters ----------------
+    // Core parameters
     int staffCount = 0;
     int dayCount = 0;
     int minOffDays = 0;
-    std::vector<int> dailyRequirements;
+    int dailyRequirements = 0; // <=0 means "auto-calculate"
 
-    // ---------------- Heap helper structures ----------------
-    // These MUST be visible to the whole class (not just cpp)
+    // Keep the last generated schedule so main() can query extras later
+    const IScheduleTable* schedulePtr = nullptr;
+
+    // Track work/off counts for the last generated schedule
+    StaffManagerImpl staffMgr;
+
+    // Heap helper structures
     struct StaffNode {
         int id;
         int worked;
@@ -23,28 +35,33 @@ private:
 
     struct StaffCompare {
         bool operator()(const StaffNode& a, const StaffNode& b) const {
-        if (a.worked != b.worked)
-            return a.worked > b.worked;        // fewer worked first
-        if (a.remaining != b.remaining)
-            return a.remaining < b.remaining;  // more remaining first
-        return a.id > b.id;                    // smaller id first (tie-break)
-    }
+            if (a.worked != b.worked)
+                return a.worked > b.worked;        // fewer worked first
+            if (a.remaining != b.remaining)
+                return a.remaining < b.remaining;  // more remaining first
+            return a.id > b.id;                    // smaller id first (tie-break)
+        }
     };
 
-    // ---------------- Internal helpers ----------------
+
     void calculateDailyRequirements();
 
 public:
-    // ---------------- Configuration ----------------
-    void setStaffCount(int m);
-    void setDayCount(int n);
-    void setMinimumDaysOff(int k);
+    GreedyShiftScheduler() = default;
+    virtual ~GreedyShiftScheduler() = default;
 
-    // ---------------- Core functionality ----------------
-    void generateSchedule(VectorScheduleTable& schedule);
+    void setStaffCount(int m) override;
+    void setDayCount(int n) override;
+    void setMinimumDaysOff(int k) override;
+    void setDailyRequirements(const int& requirements) override;
 
-    // ---------------- Validation ----------------
-    bool validate(const VectorScheduleTable& schedule) const;
+    void generateSchedule(IScheduleTable& schedule) override;
+
+    // ✅ one-parameter emergency query (valid only AFTER generateSchedule)
+    vector<int> extraStaff(int dayID) const;
+    bool hasExtraStaff(int dayID) const;
+
+    bool validate(const IScheduleTable& schedule) const override;
 };
 
 #endif // GREEDYSHIFTSCHEDULER_H

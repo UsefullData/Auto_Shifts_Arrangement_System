@@ -26,14 +26,15 @@ int main() {
     }
 
     VectorScheduleTable schedule;
-    schedule.initialize(staffCount, dayCount);
-
     GreedyShiftScheduler scheduler;
+
     scheduler.setStaffCount(staffCount);
     scheduler.setDayCount(dayCount);
     scheduler.setMinimumDaysOff(minOffDays);
 
-    // Do NOT setDailyRequirements — scheduler will compute it automatically
+    // Optional: scheduler.setDailyRequirements(x);
+    // If you don't set it, it auto-calculates.
+
     scheduler.generateSchedule(schedule);
 
     if (!scheduler.validate(schedule)) {
@@ -43,6 +44,42 @@ int main() {
 
     cout << "\nAutomatically generated schedule:\n";
     schedule.print();
+
+    // Emergency query loop
+    while (true) {
+        int day;
+        cout << "\nCheck extra staff for which day? (1.." << dayCount << ", 0=exit): ";
+        cin >> day;
+
+        if (!cin) break;
+        if (day == 0) break;
+
+        if (day < 1 || day > dayCount) {
+            cout << "Invalid day.\n";
+            continue;
+        }
+
+        auto extras = scheduler.extraStaff(day - 1); // convert to 0-based dayID
+
+        if (extras.empty()) {
+            cout << "No extra staff available for day " << day << ".\n";
+        } else {
+            cout << "Extra staff candidates for day " << day << " (staff IDs): ";
+            for (int id : extras) cout << (id + 1) << " "; // print 1-based
+            cout << "\n";
+        }
+
+        char ch;
+        cout<<"Do you want assign extra staff:(y/n):";
+        cin>>ch;
+
+        if (ch == 'y' || ch == 'Y') {
+            if (!extras.empty()) schedule.assign(extras[0], day - 1);    
+        }
+    }
+
+    schedule.print();
+
 
     return 0;
 }

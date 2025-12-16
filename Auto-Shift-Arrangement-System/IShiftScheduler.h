@@ -14,7 +14,7 @@ public:
     virtual void setStaffCount(int m) = 0;
     virtual void setDayCount(int n) = 0;
     virtual void setMinimumDaysOff(int k) = 0;
-    virtual void setDailyRequirements(const vector<int>& requirements) = 0;
+    virtual void setDailyRequirements(const int& requirements) = 0;
 
     // Generate the schedule
     virtual void generateSchedule(IScheduleTable& schedule) = 0;
