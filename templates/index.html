@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Shift Scheduler</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Auto-Shift Arrangement System</h1>
+            <p>Powered by C++ Greedy Algorithm</p>
+        </div>
+
+        <div class="card input-section">
+            <form method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Staff Count</label>
+                        <input type="number" name="staff_count" required value="5">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Days</label>
+                        <input type="number" name="day_count" required value="7">
+                    </div>
+                    <div class="form-group">
+                        <label>Min Off Days</label>
+                        <input type="number" name="min_off" required value="2">
+                    </div>
+                    <div class="form-group">
+                        <label>Daily Rate ($)</label>
+                        <input type="number" name="rate" step="0.01" required value="100">
+                    </div>
+                </div>
+                <button type="submit" class="btn-generate">Generate Schedule</button>
+            </form>
+        </div>
+
+        {% if data %}
+        <div class="card result-section">
+            <h2>Generated Schedule</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Staff ID</th>
+                            {% for i in range(data.schedule[0]|length) %}
+                            <th>Day {{ i + 1 }}</th>
+                            {% endfor %}
+                            <th>Total Pay</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for staff in data.staff_stats %}
+                        <tr>
+                            <td class="staff-name">Staff {{ staff.id }}</td>
+                            
+                            {% for shift in data.schedule[loop.index0] %}
+                            <td class="{{ 'shift-work' if shift == 1 else 'shift-off' }}">
+                                {{ 'WORK' if shift == 1 else 'OFF' }}
+                            </td>
+                            {% endfor %}
+
+                            <td class="salary">${{ staff.salary }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</body>
+</html>

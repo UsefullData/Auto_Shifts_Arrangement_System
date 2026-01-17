@@ -1,0 +1,34 @@
+# --- Python & Virtual Environment ---
+# Ignore the virtual environment folder
+.venv/
+venv/
+ENV/
+
+# Ignore compiled python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- C++ Compilation Files ---
+# Ignore the compiled executable (Windows)
+*.exe
+*.dll
+*.obj
+
+# Ignore the compiled executable (Mac/Linux)
+*.out
+*.o
+*.so
+
+# Specific exclude for your C++ program in the core folder
+core/prog
+
+# --- IDE & Editor Settings ---
+# Ignore VS Code local settings
+.vscode/
+.idea/
+
+# --- Operating System Files ---
+.DS_Store
+Thumbs.db
