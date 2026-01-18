@@ -39,3 +39,65 @@ ShiftSchedulerWeb/
 ├── app.py                 # Python Web Server (The Bridge)
 ├── .gitignore             # Git configuration
 └── README.md              # Project Documentation
+
+
+⚙️ Installation & Setup
+Prerequisites
+C++ Compiler: (g++ via MinGW or similar)
+
+Step 1: Compile the C++ Core
+The web server relies on the C++ executable. You must compile the logic first.
+
+Open your terminal in the core/ folder:
+
+Bash
+
+cd core
+g++ main.cpp GreedyShiftScheduler.cpp StaffManagerImpl.cpp VectorScheduleTable.cpp -o prog.exe
+cd ..
+(Note: If on Mac/Linux, use -o prog instead of -o prog.exe)
+
+Step 2: Set Up Python Environment
+Create a virtual environment to keep the project clean.
+
+In the main project folder:
+
+Bash
+
+# Create the environment
+python -m venv .venv
+
+# Activate it (Windows)
+.\.venv\Scripts\activate
+
+# Activate it (Mac/Linux)
+source .venv/bin/activate
+Step 3: Install Dependencies
+Install Flask (the web framework).
+
+Bash
+
+pip install flask
+▶️ How to Run
+Once compiled and installed, start the application:
+
+Run the Python Bridge:
+
+Bash
+
+python app.py
+Open in Browser: Visit http://127.0.0.1:5000
+
+👥 Collaborators
+A huge thanks to the UsefulData team for bringing this project to life:
+
+[Your Name] - Project Lead & Algorithm Design
+
+[Collaborator Name] - Frontend Developer
+
+[Collaborator Name] - Backend Integration
+
+[Collaborator Name] - Testing & QA
+
+📄 License
+This project is open-source and available under the MIT License.
