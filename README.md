@@ -45,5 +45,5 @@ ShiftSchedulerWeb/
 A huge thanks to the UsefulData team for bringing this project to life:
 * **[Abdulmajeed Tawfik](https://github.com/Abdulmajeed-Tawfik)**
 * **[ASMAA BEQUI](https://github.com/Asmaabe01)**
-* **[Guncha REJEBOVA](https://github.com/guncha3110)**
+* **[Guncha REJEPOVA](https://github.com/guncha3110)**
 * **[Muhammetgylyjov Baygeldi](https://github.com/BaygeldiAza)**
