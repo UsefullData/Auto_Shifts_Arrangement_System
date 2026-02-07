@@ -51,6 +51,16 @@ pip install requirements.txt
 
 ---
 
+## ▶️ How to Run
+
+```
+g++ core/main.cpp core/GreedyShiftScheduler.cpp core/StaffManagerImpl.cpp core VectorScheduleTable.cpp -o core/prog.exe
+
+python app.py
+
+```
+
+
 ## 👥 Collaborators
 ---
 A huge thanks to the UsefulData team for bringing this project to life:
