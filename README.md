@@ -40,6 +40,17 @@ ShiftSchedulerWeb/
 ├── .gitignore             # Git configuration
 └── README.md              # Project Documentation
 ```
+---
+
+# Install 
+
+```
+pip install requirements.txt
+
+```
+
+---
+
 ## 👥 Collaborators
 ---
 A huge thanks to the UsefulData team for bringing this project to life:
